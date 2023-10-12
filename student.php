@@ -4,6 +4,7 @@ session_start();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@ session_start();
     <link rel="stylesheet" href="../Css/index.css"> <!-- Link to your CSS file -->
     <link rel="stylesheet" href="../Css/Home.css"> <!-- Link to your CSS file -->
 </head>
+
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar">
@@ -28,10 +30,11 @@ session_start();
                 <li><a href="Chat.php">Chat</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Contact</a></li>
-                <li><form action="logout.php" method="POST">
-                    <button type="submit" name="logout-submit" class="logout-btn"
-                    >Logout</button>
-                </form></li>
+                <li>
+                    <form action="logout.php" method="POST">
+                        <button type="submit" name="logout-submit" class="logout-btn">Logout</button>
+                    </form>
+                </li>
 
                 <!-- <li><a href="login.php">Login</a></li>
                 <li><a href="register.php">Signup</a></li> -->
@@ -53,104 +56,99 @@ session_start();
     </section>
 
     <section class="courses-section">
-        <h2>Your Courses</h2>
-        <!-- <table>
-            <thead>
-                <tr>
-                    <th>Course Name</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Course 1</td>
-                    <td><button class="start-course">Start</button></td>
-                </tr>
-                <tr>
-                    <td>Course 2</td>
-                    <td><button class="start-course">Start</button></td>
-                </tr>
-            </tbody>
-        </table> -->
-        <table>
-            <thead>
-                <tr>
-                    <th>Course Name</th>
-                    <th>Instructor</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- loop over number of courses and add a row for each course -->
-                <?php
-                for ($i = 0; $i < count($_SESSION["courses"]); $i++) {
-                    echo "<tr>";
-                    echo "<td>" . $_SESSION["courses"][$i] . "</td>";
-                    echo "<td>" . $_SESSION["instructors"][$i] . "</td>";
-                    echo "<td><button class='start-course'>Start</button></td>";
-                    echo "</tr>";
-                }
-                ?>
-            </tbody>
+        <?php
+        echo "<h2>Your Courses</h2>";
+        echo "<table>";
+        echo "<thead>";
+        echo "<tr>";
+        echo "<th>Course Name</th>";
+        echo "<th>Instructor</th>";
+        echo "<th>Action</th>";
+        echo "</tr>";
+        echo "</thead>";
+        echo "<tbody>";
+        for ($i = 0; $i < count($_SESSION["courses"]); $i++) {
+            echo "<tr>";
+            echo "<td>" . $_SESSION["courses"][$i] . "</td>";
+            echo "<td>" . $_SESSION["instructors"][$i] . "</td>";
+            echo "<td><button class='start-course'>Start</button></td>";
+            echo "</tr>";
+        }
+        echo "</tbody>";
+        echo "</table>";
+        ?>
     </section>
 
     <section class="exams-section">
-        <h2>Your Exams</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Exam Name</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Exam 1</td>
-                    <td><button  class="start-exam">Start</button></td>
-                </tr>
-                <tr>
-                    <td>Exam 2</td>
-                    <td><button class="start-exam">Start</button></td>
-                </tr>
-                <!-- Add more exams here -->
-            </tbody>
-        </table>
+        <?php
+        echo "<h2>Your Exams</h2>";
+        echo "<table>";
+        echo "<thead>";
+        echo "<tr>";
+        echo "<th>Exam Name</th>";
+        echo "<th>Course Name</th>";
+        echo "<th>Start Date</th>";
+        echo "<th>Marks</th>";
+        echo "<th>Total Marks</th>";
+        echo "<th>Action</th>";
+        echo "</tr>";
+        echo "</thead>";
+        echo "<tbody>";
+        for ($i = 0; $i < count($_SESSION["exams"]); $i++) {
+            echo "<tr>";
+            echo "<td>" . $_SESSION["titles"][$i] . "</td>";
+            echo "<td>" . $_SESSION["course_ids"][$i] . "</td>";
+            echo "<td>" . $_SESSION["startDates"][$i] . "</td>";
+            echo "<td>" . $_SESSION["marks"][$i] . "</td>";
+            echo "<td>" . $_SESSION["totalmarks"][$i] . "</td>";
+            if ($_SESSION["examdone"][$i] == 0) {
+                echo "<td><button class='start-exam'>Start</button></td>";
+            } else {
+                echo "<td><button class='start-exam'>View</button></td>";
+            }
+            echo "</tr>";
+        }
+        echo "</tbody>";
+        echo "</table>";
+        ?>
     </section>
 
     <section class="reports-section">
-        <h2>Your Reports</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Report Name</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Report 1</td>
-                    <td><a class="table_btn" href="#" target="_blank">View Report</a></td>
-                </tr>
-                <tr>
-                    <td>Report 2</td>
-                    <td><a class="table_btn"  href="#" target="_blank">View Report</a></td>
-                </tr>
-                <!-- Add more reports here -->
-            </tbody>
-        </table>
-</section>
+        <?php
+        echo "<h2>Your Reports</h2>";
+        echo "<table>";
+        echo "<thead>";
+        echo "<tr>";
+        echo "<th>Course Name</th>";
+        echo "<th>Attendance</th>";
+        echo "<th>Exam Marks</th>";
+        echo "</tr>";
+        echo "</thead>";
+        echo "<tbody>";
+        for ($i = 0; $i < count($_SESSION["reports"]); $i++) {
+            echo "<tr>";
+            echo "<td>" . $_SESSION["reports"][$i] . "</td>";
+            echo "<td>" . $_SESSION["attendance"][$i] . "</td>";
+            echo "<td>" . $_SESSION["examMarks"][$i] . "</td>";
+            echo "</tr>";
+        }
+        echo "</tbody>";
+        echo "</table>";
+        ?>
+    </section>
 
-<footer>
-    <div class="container-footer">
-        <p>&copy; 2023 Skillify. All rights reserved.</p>
-        <div class="social-media-icons">
-            <a href="https://www.facebook.com/yourcompany" target="_blank"><img width="20" height="20" src="../icon/facebook.png" alt="Facebook"></a>
-            <a href="https://www.twitter.com/yourcompany" target="_blank"><img width="20" height="20" src="../icon/twitter.png" alt="Twitter"></a>
-            <a href="https://www.linkedin.com/company/yourcompany" target="_blank"><img width="20" height="20" src="../icon/instagram.png" alt="instagram"></a>
+    <footer>
+        <div class="container-footer">
+            <p>&copy; 2023 Skillify. All rights reserved.</p>
+            <div class="social-media-icons">
+                <a href="https://www.facebook.com/yourcompany" target="_blank"><img width="20" height="20" src="../icon/facebook.png" alt="Facebook"></a>
+                <a href="https://www.twitter.com/yourcompany" target="_blank"><img width="20" height="20" src="../icon/twitter.png" alt="Twitter"></a>
+                <a href="https://www.linkedin.com/company/yourcompany" target="_blank"><img width="20" height="20" src="../icon/instagram.png" alt="instagram"></a>
+            </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
     <script src="../js/index.js"></script> <!-- Link to your JavaScript file -->
 </body>
+
 </html>

@@ -69,13 +69,15 @@ session_start();
                 <span></span>
             </div>
             <ul class="nav-menu">
-                <li><a href="student.php">Student</a></li>
-                <li><a href="instructor.php">Instructor</a></li>
-                <li><a href="QA.php">QA officer</a></li>
-                <li><a href="programCordinator.php">Co-ordinator</a></li>
-                <li><a href="admin.php">Admin</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="studentList.php">Student</a></li>
+                <li><a href="instructorList.php">Instructor</a></li>
+                <li><a href="QAList.php">QA officer</a></li>
+                <li><a href="programCordinatorList.php">Co-ordinator</a></li>
+                <li>
+                    <form action="logout.php" method="POST">
+                        <button type="submit" name="logout-submit" class="logout-btn">Logout</button>
+                    </form>
+                </li>
             </ul>
         </div>
     </nav>
@@ -85,7 +87,7 @@ session_start();
     <!-- Form for Adding Users -->
     <div class="card" id="addUserForm">
         <h2>Add User</h2>
-        <form>
+        <form method="post" action="process_form.php">
             <div>
                 <label for="userName">Name:</label>
                 <input type="text" id="userName" required>
@@ -96,12 +98,13 @@ session_start();
                 <select id="userRole">
                     <option value="student">Student</option>
                     <option value="instructor">Instructor</option>
-                    <option value="qao">Quality Assurance Officer</option>
+                    <option value="qa">Quality Assurance Officer</option>
+                    <option value="coordinator">Program Coordinator</option>
                 </select>
             </div>
 
             <div>
-                <button type="button" id="addUserButton">Add User</button>
+                <button type="button" id="addUserButton">ADD USER</button>
             </div>
         </form>
     </div>
@@ -184,17 +187,18 @@ session_start();
         document.getElementById("addUserButton").addEventListener("click", function () {
             const userName = document.getElementById("userName").value;
             const userRole = document.getElementById("userRole").value;
+            console.log(userName);
+            console.log(userRole);
+            // // Create a new row in the corresponding table with the user's name and description
+            // const tableId = `${userRole}Table`;
+            // const table = document.getElementById(tableId).getElementsByTagName('tbody')[0];
+            // const newRow = table.insertRow(-1);
+            // const cell1 = newRow.insertCell(0);
+            // const cell2 = newRow.insertCell(1);
+            // cell1.innerHTML = `<a href="userInfo.php">${userName}</a>`;
+            // cell2.innerHTML = `Description of ${userRole} goes here.`;
     
-            // Create a new row in the corresponding table with the user's name and description
-            const tableId = `${userRole}Table`;
-            const table = document.getElementById(tableId).getElementsByTagName('tbody')[0];
-            const newRow = table.insertRow(-1);
-            const cell1 = newRow.insertCell(0);
-            const cell2 = newRow.insertCell(1);
-            cell1.innerHTML = `<a href="userInfo.php">${userName}</a>`;
-            cell2.innerHTML = `Description of ${userRole} goes here.`;
-    
-            // Clear the form
+            // // Clear the form
             document.getElementById("userName").value = "";
         });
     </script>

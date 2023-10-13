@@ -28,7 +28,11 @@ session_start();
                 <li><a href="instructor.php">Instructor</a></li>
                 <li><a href="programCordinator.php">Co-ordinator</a></li>
                 <li><a href="message.php">Message</a></li>
-                <li><a href="#">sign Out</a></li>
+                <li>
+                    <form action="SignOut.php" method="POST">
+                        <button type="submit" name="SignOut-submit" class="SignOut-btn">SignOut</button>
+                    </form>
+                </li>
             </ul>
         </div>
     </nav>

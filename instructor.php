@@ -23,15 +23,15 @@ session_start();
                 <span></span>
             </div>
             <ul class="nav-menu">
-                <li><a href="student.php">Student</a></li>
-                <li><a href="instructor.php">Instructor</a></li>
-                <li><a href="QA.php">QA officer</a></li>
-                <li><a href="p.php">Co-ordinator</a></li>
-                <li><a href="admin.php">Admin</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="./pages/contact.php">Contact</a></li>
-                <!-- <li><a href="login.php">Login</a></li>
-                <li><a href="register.php">Signup</a></li> -->
+                <li><a href="Studentlist.php">Students</a></li>
+                <li><a href="Files.php">Files</a></li>
+                <li><a href="Chat.php">Chat</a></li>
+                <li><a href="Appointments.php">Appointments</a></li>
+                <li>
+                    <form action="logout.php" method="POST">
+                        <button type="submit" name="logout-submit" class="logout-btn">Logout</button>
+                    </form>
+                </li>
             </ul>
         </div>
     </nav>
@@ -39,9 +39,12 @@ session_start();
     <section class="student-info-section">
         <h2>Instructor  Information</h2>
         <div class="student-info">
-            <p><strong>Name:</strong> John Doe</p>
-            <p><strong>Email:</strong> John@gmail.com</p>
-            <p><strong>Instructor ID:</strong> 792739</p>
+             <!-- <p><strong>Name:</strong> [Student Name]</p> -->
+             <p><strong>Name:</strong> <?php echo htmlspecialchars($_SESSION["username"]); ?></p>
+            <!-- <p><strong>Email:</strong> [Student Email]</p> -->
+            <p><strong>Email:</strong> <?php echo htmlspecialchars($_SESSION["email"]); ?></p>
+            <!-- <p><strong>Student ID:</strong> [Student ID]</p> -->
+            <p><strong>Student ID:</strong> <?php echo htmlspecialchars($_SESSION["id"]); ?></p>
             <!-- Add more student information here -->
         </div>
     </section>

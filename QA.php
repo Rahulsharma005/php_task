@@ -26,13 +26,9 @@ session_start();
             <ul class="nav-menu">
                 <li><a href="student.php">Student</a></li>
                 <li><a href="instructor.php">Instructor</a></li>
-                <li><a href="QA.php">QA officer</a></li>
                 <li><a href="programCordinator.php">Co-ordinator</a></li>
-                <li><a href="admin.php">Admin</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="./pages/contact.php">Contact</a></li>
-                <!-- <li><a href="login.php">Login</a></li>
-                <li><a href="register.php">Signup</a></li> -->
+                <li><a href="message.php">Message</a></li>
+                <li><a href="#">sign Out</a></li>
             </ul>
         </div>
     </nav>

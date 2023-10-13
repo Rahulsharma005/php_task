@@ -24,15 +24,15 @@ session_start();
                 <span></span>
             </div>
             <ul class="nav-menu">
-                <li><a href="student.php">Student</a></li>
+                <li><a href="studentlist.php">Student List</a></li>
                 <li><a href="instructor.php">Instructor</a></li>
-                <li><a href="QA.php">QA officer</a></li>
                 <li><a href="programCordinator.php">Co-ordinator</a></li>
-                <li><a href="admin.php">Admin</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="./pages/contact.php">Contact</a></li>
-                <!-- <li><a href="login.php">Login</a></li>
-                <li><a href="register.php">Signup</a></li> -->
+                <li><a href="chat.php">Chat</a></li>
+                <li>
+                    <form action="logout.php" method="POST">
+                        <button type="submit" name="logout-submit" class="logout-btn">Logout</button>
+                    </form>
+                </li>
             </ul>
         </div>
     </nav>
@@ -126,71 +126,18 @@ session_start();
                     <th>Analytics</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- Add rows for each student -->
-                <tr>
-                    <td>Student 1</td>
-                    <td>Course A</td>
-                    <td>Instructor X</td>
-                    <td><a href="stuAnalytics.php">View Analytics</a></td>
-                </tr>
-                <tr>
-                    <td>Student 2</td>
-                    <td>Course B</td>
-                    <td>Instructor Y</td>
-                    <td><a href="stuAnalytics.php">View Analytics</a></td>
-                </tr>
-                <tr>
-                    <td>Student 3</td>
-                    <td>Course C</td>
-                    <td>Instructor Z</td>
-                    <td><a href="stuAnalytics.php">View Analytics</a></td>
-                </tr>
-                <tr>
-                    <td>Student 4</td>
-                    <td>Course A</td>
-                    <td>Instructor X</td>
-                    <td><a href="stuAnalytics.php">View Analytics</a></td>
-                </tr>
-                <tr>
-                    <td>Student 5</td>
-                    <td>Course B</td>
-                    <td>Instructor Y</td>
-                    <td><a href="stuAnalytics.php">View Analytics</a></td>
-                </tr>
-                <tr>
-                    <td>Student 6</td>
-                    <td>Course C</td>
-                    <td>Instructor Z</td>
-                    <td><a href="stuAnalytics.php">View Analytics</a></td>
-                </tr>
-                <tr>
-                    <td>Student 7</td>
-                    <td>Course A</td>
-                    <td>Instructor X</td>
-                    <td><a href="stuAnalytics.php">View Analytics</a></td>
-                </tr>
-                <tr>
-                    <td>Student 8</td>
-                    <td>Course B</td>
-                    <td>Instructor Y</td>
-                    <td><a href="stuAnalytics.php">View Analytics</a></td>
-                </tr>
-                <tr>
-                    <td>Student 9</td>
-                    <td>Course C</td>
-                    <td>Instructor Z</td>
-                    <td><a href="stuAnalytics.php">View Analytics</a></td>
-                </tr>
-                <tr>
-                    <td>Student 10</td>
-                    <td>Course A</td>
-                    <td>Instructor X</td>
-                    <td><a href="stuAnalytics.php">View Analytics</a></td>
-                </tr>
-                
-                <!-- Add more rows as needed -->
-            </tbody>
+            <?php
+                echo "<tbody>";
+                for ($i = 0; $i < count($_SESSION["student"]); $i++) {
+                    echo "<tr>";
+                    echo "<td>" . $_SESSION["studentName"][$i] . "</td>";
+                    echo "<td>" . $_SESSION["course"][$i] . "</td>";
+                    echo "<td>" . $_SESSION["instructorName"][$i] . "</td>";
+                    echo "<td><a href='stuAnalytics.php'>View Analytics</a></td>";
+                    echo "</tr>";
+                }
+                echo "</tbody>";
+            ?>
         </table>
     </section>
 

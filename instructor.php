@@ -44,12 +44,20 @@ session_start();
             <!-- <p><strong>Email:</strong> [Student Email]</p> -->
             <p><strong>Email:</strong> <?php echo htmlspecialchars($_SESSION["email"]); ?></p>
             <!-- <p><strong>Student ID:</strong> [Student ID]</p> -->
-            <p><strong>Student ID:</strong> <?php echo htmlspecialchars($_SESSION["id"]); ?></p>
+            <p><strong>Instructor ID:</strong> <?php echo htmlspecialchars($_SESSION["id"]); ?></p>
             <!-- Add more student information here -->
         </div>
     </section>
 
     <section class="student-feedback">
+        <div>
+            <ul>
+                <li><button>Create Exam</button></li>
+                <li><button>Grade Students</button></li>
+                <li><button>Create Course</button></li>
+                <li><button>Create Forum</button></li>
+            </ul>
+        </div>
         <h2>Student Feedback</h2>
         <form id="feedback-form">
             <label for="student-name-input">Student Name:</label>

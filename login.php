@@ -208,6 +208,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             }
                             // if role is qa redirect to qa page
                             if ($role == $qa) {
+                                // Initialize arrays to store data
+                                // Instructor Name
+                                // Course
+                                // Student Name
+
+                                $instructorName = array();
+                                $course = array();
+                                $studentName = array();
+
+                                // get all courses
+                                $sql = "SELECT course_name, instructor_id, student_id FROM courses";
+                                $result = mysqli_query($mysqli, $sql);
+
+                                // Loop over the results and store them in the arrays
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    array_push($course, $row['course_name']);
+                                    array_push($instructor_ids, $row['instructor_id']);
+                                    array_push($student_ids, $row['student_id']);
+                                }
+
+                                // Loop over the instructor IDs and get the instructor names
+                                foreach ($instructor_ids as $instructor_id) {
+                                    $sql = "SELECT username FROM users WHERE id = '$instructor_id'";
+                                    $result = mysqli_query($mysqli, $sql);
+                                    $row = mysqli_fetch_assoc($result);
+                                    array_push($instructorName, $row['username']);
+                                }
+
+                                // Loop over the student IDs and get the student names
+                                foreach ($student_ids as $student_id) {
+                                    $sql = "SELECT username FROM users WHERE id = '$student_id'";
+                                    $result = mysqli_query($mysqli, $sql);
+                                    $row = mysqli_fetch_assoc($result);
+                                    array_push($studentName, $row['username']);
+                                }
+
+                                // Store the arrays in session variables
+                                $_SESSION["instructorName"] = $instructorName;
+                                $_SESSION["course"] = $course;
+                                $_SESSION["studentName"] = $studentName;
+
                                 header("location: qa.php");
                             }
                             // if role is coordinator redirect to coordinator page

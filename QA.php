@@ -24,7 +24,7 @@ session_start();
                 <span></span>
             </div>
             <ul class="nav-menu">
-                <li><a href="student.php">Student</a></li>
+                <li><a href="studentlist.php">Student List</a></li>
                 <li><a href="instructor.php">Instructor</a></li>
                 <li><a href="programCordinator.php">Co-ordinator</a></li>
                 <li><a href="chat.php">Chat</a></li>

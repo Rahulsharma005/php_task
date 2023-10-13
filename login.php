@@ -216,6 +216,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 $instructorName = array();
                                 $course = array();
                                 $studentName = array();
+                                $instructor_ids = array();
+                                $student_ids = array();
 
                                 // get all courses
                                 $sql = "SELECT course_name, instructor_id, student_id FROM courses";

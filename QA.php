@@ -126,7 +126,7 @@ session_start();
                     <th>Analytics</th>
                 </tr>
             </thead>
-            <? php
+            <?php
                 echo "<tbody>";
                 for ($i = 0; $i < count($_SESSION["student"]); $i++) {
                     echo "<tr>";

@@ -29,8 +29,8 @@ session_start();
                 <li><a href="programCordinator.php">Co-ordinator</a></li>
                 <li><a href="chat.php">Chat</a></li>
                 <li>
-                    <form action="SignOut.php" method="POST">
-                        <button type="submit" name="SignOut-submit" class="SignOut-btn">SignOut</button>
+                    <form action="logout.php" method="POST">
+                        <button type="submit" name="logout-submit" class="logout-btn">Logout</button>
                     </form>
                 </li>
             </ul>

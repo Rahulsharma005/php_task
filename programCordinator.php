@@ -8,9 +8,9 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Program Coordinator Dashboard</title>
-    <link rel="stylesheet" href="../Css/Program.css"> <!-- Link to your CSS file -->
-    <link rel="stylesheet" href="../Css/Home.css"> <!-- Link to your CSS file -->
-    <link rel="stylesheet" href="../Css/index.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="../Css/Program.css"> 
+    <link rel="stylesheet" href="../Css/Home.css"> 
+    <link rel="stylesheet" href="../Css/index.css"> 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
@@ -24,15 +24,11 @@ session_start();
                 <span></span>
             </div>
             <ul class="nav-menu">
-                <li><a href="student.php">Student</a></li>
-                <li><a href="instructor.php">Instructor</a></li>
-                <li><a href="QA.php">QA officer</a></li>
-                <li><a href="programCordinator.php">Co-ordinator</a></li>
-                <li><a href="admin.php">Admin</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-                <!-- <li><a href="login.php">Login</a></li>
-                <li><a href="register.php">Signup</a></li> -->
+                <li><a href="instructorList.php">Instructor</a></li>
+                <li><a href="QAList.php">QA officer</a></li>
+                <li><a href="adminList.php">Admin</a></li>
+                <li><a href="chat.php">Chat</a></li>
+                <li><a href="logout.php">Logout</a></li>
             </ul>
         </div>
     </nav>
@@ -45,8 +41,10 @@ session_start();
     <section class="dashboard-content">
         <!-- Coordinator Information -->
         <div class="coordinator-info">
-            <h2>Welcome, Mike Watts</h2>
-            <p>Email: Mike.W@gmail.com</p>
+            <?php
+                echo "<h2>Welcome, " . $_SESSION["username"] . "</h2>";
+                echo "<p>Email: " . $_SESSION["email"] . "</p>";
+            ?>
         </div>
 
         <!-- Communication Tools -->
@@ -54,9 +52,13 @@ session_start();
             <h2>Communication Tools</h2>
             <!-- Add communication tools here, e.g., chat, messaging, email -->
             <ul>
-                <li><a href="#">Chat with Instructors</a></li>
-                <li><a href="#">Send Messages to Students</a></li>
-                <li><a href="#">Email Administrators</a></li>
+                <li><a href="chat.php">Chat with Instructors</a></li>
+                <li><a href="chat.php">Send Messages to Students</a></li>
+                <li><a href="mailto:
+                <?php
+                    echo $_SESSION["email"];
+                ?>
+                ">Email Administrators</a></li>
             </ul>
         </div>
 
@@ -73,39 +75,18 @@ session_start();
                         <th>Grades (%)</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <!-- Dummy data for student performance (5 records) -->
-                    <tr>
-                        <td>John Doe</td>
-                        <td>Math 101</td>
-                        <td>90%</td>
-                        <td>85%</td>
-                    </tr>
-                    <tr>
-                        <td>Jane Smith</td>
-                        <td>English 201</td>
-                        <td>95%</td>
-                        <td>78%</td>
-                    </tr>
-                    <tr>
-                        <td>Michael Johnson</td>
-                        <td>Science 301</td>
-                        <td>88%</td>
-                        <td>92%</td>
-                    </tr>
-                    <tr>
-                        <td>Susan White</td>
-                        <td>History 101</td>
-                        <td>92%</td>
-                        <td>80%</td>
-                    </tr>
-                    <tr>
-                        <td>Linda Brown</td>
-                        <td>Art 202</td>
-                        <td>98%</td>
-                        <td>88%</td>
-                    </tr>
-                </tbody>
+                <?php
+                    echo "<tbody>";
+                    for ($i = 0; $i < count($_SESSION["students"]); $i++) {
+                        echo "<tr>";
+                        echo "<td>" . $_SESSION["students"][$i] . "</td>";
+                        echo "<td>" . $_SESSION["courseName"][$i] . "</td>";
+                        echo "<td>" . $_SESSION["attendance"][$i] . "</td>";
+                        echo "<td>" . $_SESSION["percentage"][$i] . "</td>";
+                        echo "</tr>";
+                    }
+                    echo "</tbody>";
+                ?>
             </table>
         </div>
     </section>

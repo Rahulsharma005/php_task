@@ -255,10 +255,178 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             }
                             // if role is coordinator redirect to coordinator page
                             if ($role == $coordinator) {
-                                header("location: coordinator.php");
+                                $students = array();
+                                $courseName = array();
+                                $reports = array();
+                                $attendance = array();
+                                $marks = array();
+                                $totalmarks = array();
+                                $course_ids = array();
+                                $examIds = array();
+                                $reportIds = array();
+
+                                // get all students
+                                $sql = "SELECT username, id FROM users WHERE role = 'student'";
+                                $result = mysqli_query($mysqli, $sql);
+
+                                // Loop over the results and store them in the arrays
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    array_push($students, $row['username']);
+                                }
+
+                                // get courses, reports, and exam IDs for each student
+                                foreach ($students as $student) {
+                                    $sql = "SELECT course_name, course_id FROM courses WHERE student_id = (SELECT id FROM users WHERE username = '$student')";
+                                    $result = mysqli_query($mysqli, $sql);
+                                    $row = mysqli_fetch_assoc($result);
+                                    array_push($courseName, $row['course_name']);
+                                    array_push($course_ids, $row['course_id']);
+
+                                    $sql = "SELECT report_id, Attendance, exam_id FROM report WHERE student_id = (SELECT id FROM users WHERE username = '$student')";
+                                    $result = mysqli_query($mysqli, $sql);
+                                    $row = mysqli_fetch_assoc($result);
+                                    array_push($reports, $row['report_id']);
+                                    array_push($attendance, $row['Attendance']);
+                                    array_push($examIds, $row['exam_id']);
+                                }
+
+                                // Calculate and store the percentage for each student
+                                $percentage = array();
+                                for ($i = 0; $i < count($reports); $i++) {
+                                    $sql = "SELECT marks, totalmarks FROM exam WHERE exam_id = '$examIds[$i]'";
+                                    $result = mysqli_query($mysqli, $sql);
+                                    $row = mysqli_fetch_assoc($result);
+                                    array_push($marks, $row['marks']);
+                                    array_push($totalmarks, $row['totalmarks']);
+                                    array_push($percentage, round(($marks[$i] / $totalmarks[$i]) * 100, 2));
+                                }
+
+
+                                // Store the arrays in session variables
+                                $_SESSION["students"] = $students;
+                                $_SESSION["courseName"] = $courseName;
+                                $_SESSION["attendance"] = $attendance;
+                                $_SESSION["percentage"] = $percentage;
+                                header("location: programCordinator.php");
                             }
                             // if role is admin redirect to admin page
                             if ($role == $admin) {
+                                // Initialize arrays to store data
+                                $studentName = array();
+                                $instructorName = array();
+                                $QAName = array();
+                                $coordinatorName = array();
+                                $student_ids = array();
+                                $instructor_ids = array();
+                                $QA_ids = array();
+                                $coordinator_ids = array();
+
+                                // get all students
+                                $sql = "SELECT username, id FROM users WHERE role = 'student'";
+                                $result = mysqli_query($mysqli, $sql);
+
+                                // Loop over the results and store them in the arrays
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    array_push($studentName, $row['username']);
+                                    array_push($student_ids, $row['id']);
+                                }
+
+                                // get all instructors
+                                $sql = "SELECT username, id FROM users WHERE role = 'instructor'";
+                                $result = mysqli_query($mysqli, $sql);
+
+                                // Loop over the results and store them in the arrays
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    array_push($instructorName, $row['username']);
+                                    array_push($instructor_ids, $row['id']);
+                                }
+
+                                // get all QAs
+                                $sql = "SELECT username, id FROM users WHERE role = 'qa'";
+                                $result = mysqli_query($mysqli, $sql);
+
+                                // Loop over the results and store them in the arrays
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    array_push($QAName, $row['username']);
+                                    array_push($QA_ids, $row['id']);
+                                }
+
+                                // get all coordinators
+                                $sql = "SELECT username, id FROM users WHERE role = 'coordinator'";
+                                $result = mysqli_query($mysqli, $sql);
+
+                                // Loop over the results and store them in the arrays
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    array_push($coordinatorName, $row['username']);
+                                    array_push($coordinator_ids, $row['id']);
+                                }
+
+                                // Initialize arrays to store user data
+                                $studentdata = array();
+                                $instructordata = array();
+                                $qadata = array();
+                                $coordinatordata = array();
+
+                                // Get additional data for students from userdesc using student IDs
+                                foreach ($student_ids as $student_id) {
+                                    $sql = "SELECT about FROM userdesc WHERE user_id = ?";
+                                    $stmt = $mysqli->prepare($sql);
+                                    $stmt->bind_param("i", $student_id);
+                                    $stmt->execute();
+                                    $stmt->bind_result($about);
+                                    $stmt->fetch();
+                                    $studentdata[] = $about;
+                                    $stmt->close();
+                                }
+
+                                // Get additional data for instructors from userdesc using instructor IDs
+                                foreach ($instructor_ids as $instructor_id) {
+                                    $sql = "SELECT about FROM userdesc WHERE user_id = ?";
+                                    $stmt = $mysqli->prepare($sql);
+                                    $stmt->bind_param("i", $instructor_id);
+                                    $stmt->execute();
+                                    $stmt->bind_result($about);
+                                    $stmt->fetch();
+                                    $instructordata[] = $about;
+                                    $stmt->close();
+                                }
+
+                                // Get additional data for QA officers from userdesc using QA officer IDs
+                                foreach ($QA_ids as $QA_id) {
+                                    $sql = "SELECT about FROM userdesc WHERE user_id = ?";
+                                    $stmt = $mysqli->prepare($sql);
+                                    $stmt->bind_param("i", $QA_id);
+                                    $stmt->execute();
+                                    $stmt->bind_result($about);
+                                    $stmt->fetch();
+                                    $qadata[] = $about;
+                                    $stmt->close();
+                                }
+
+                                // Get additional data for coordinators from userdesc using coordinator IDs
+                                foreach ($coordinator_ids as $coordinator_id) {
+                                    $sql = "SELECT about FROM userdesc WHERE user_id = ?";
+                                    $stmt = $mysqli->prepare($sql);
+                                    $stmt->bind_param("i", $coordinator_id);
+                                    $stmt->execute();
+                                    $stmt->bind_result($about);
+                                    $stmt->fetch();
+                                    $coordinatordata[] = $about;
+                                    $stmt->close();
+                                }
+
+
+                                // Store the arrays in session variables
+                                $_SESSION["studentName"] = $studentName;
+                                $_SESSION["instructorName"] = $instructorName;
+                                $_SESSION["QAName"] = $QAName;
+                                $_SESSION["coordinatorName"] = $coordinatorName;
+                                $_SESSION["studentdata"] = $studentdata;
+                                $_SESSION["instructordata"] = $instructordata;
+                                $_SESSION["qadata"] = $qadata;
+                                $_SESSION["coordinatordata"] = $coordinatordata;
+
+
                                 header("location: admin.php");
                             }
                             // if role is not set redirect to login page
@@ -313,9 +481,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2>Login</h2>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
             <input type="text" name="username" placeholder="Username" required>
-            <span class="help-block"><?php echo $username_err; ?></span>
+            <span class="help-block">
+                <?php echo $username_err; ?>
+            </span>
             <input type="password" name="password" placeholder="Password" required>
-            <span class="help-block"><?php echo $password_err; ?></span>
+            <span class="help-block">
+                <?php echo $password_err; ?>
+            </span>
             <button type="submit">Login</button>
         </form>
         <p>Don't have an account? <a href="register.php">Register here</a></p>

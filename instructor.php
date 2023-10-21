@@ -46,19 +46,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "SELECT id FROM users WHERE username = '$student_name'";
     $result = $mysqli->query($sql);
     $row = mysqli_fetch_array($result);
-    $student_id = $row['id'];
-
-    // insert feedback into database
-    $sql = "INSERT INTO feedback (student_id, instructor_id, feedback_text) VALUES ('$student_id', '$instructor_id', '$feedback_text')";
-    $mysqli->query($sql);
-
-    // refresh page
-    header("Refresh:0");
+    if ($row) {
+        $student_id = $row['id'];
+        // Insert feedback into the database
+        $sql = "INSERT INTO feedback (student_id, instructor_id, feedback_text) VALUES ('$student_id', '$instructor_id', '$feedback_text')";
+        $mysqli->query($sql);
+        // Refresh page or redirect as needed
+        header("Refresh:0");
+    } else {
+        echo "Student not found in the database.";
+    }
 } 
 
 
 // get all courses assigned to the current instructor
-$sql = "SELECT * FROM courses WHERE instructor_id = '$instructor_id'";
+$sql = "SELECT course_name, report FROM courses WHERE instructor_id = '$instructor_id'";
 $result = $mysqli->query($sql);
 $row = mysqli_fetch_array($result);
 $courses = array();
@@ -68,49 +70,18 @@ while ($row = mysqli_fetch_array($result)) {
 
 // course form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // aleart
+    echo "<script>alert('Course added successfully!')</script>";
     // get course name and course description
     $course_name = $_POST["course-name-input"];
-    $course_desc = $_POST["course-desc-input"];
-
-    // insert course into database
-    $sql = "INSERT INTO courses (course_name, report, instructor_id) VALUES ('$course_name', '$course_desc', '$instructor_id')";
+    $course_description = $_POST["course-desc-input"];
+    $student_deafult_id = 5;
+    $sql = "INSERT INTO courses (course_name, report, instructor_id, student_id) VALUES ('$course_name', '$course_description', '$instructor_id', '$student_deafult_id')";
     $mysqli->query($sql);
 
     // refresh page
     header("Refresh:0");
 }
-
-// studnet attendance is progress
-// get all courses assigned to the current instructor
-// $sql = "SELECT attendance FROM report WHERE instructor_id = '$instructor_id'";
-// $result = $mysqli->query($sql);
-// $row = mysqli_fetch_array($result);
-// $attendance = array();
-
-// get from student id
-$sql = "SELECT * FROM attendance WHERE instructor_id = '$instructor_id'";
-
-while ($row = mysqli_fetch_array($result)) {
-    $attendance[] = array($row['report_id'], $row['Attendance'], $row['course_id'], $row['student_id'], $row['exam_id']);
-}
-
-// attendance form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // get course name and course description
-    $report_id = $_POST["report_id"];
-    $Attendance = $_POST["Attendance"];
-    $course_id = $_POST["course_id"];
-    $student_id = $_POST["student_id"];
-    $exam_id = $_POST["exam_id"];
-
-    // insert course into database
-    $sql = "INSERT INTO attendance (report_id, Attendance, course_id, student_id, exam_id, instructor_id) VALUES ('$report_id', '$Attendance', '$course_id', '$student_id', '$exam_id', '$instructor_id')";
-    $mysqli->query($sql);
-
-    // refresh page
-    header("Refresh:0");
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -136,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <ul class="nav-menu">
                 <li><a href="Studentlist.php">Students</a></li>
                 <li><a href="Files.php">Files</a></li>
-                <li><a href="Chat.php">Chat</a></li>
+                <li><a href="Chats.php">Chat</a></li>
                 <li><a href="Appointments.php">Appointments</a></li>
                 <li><a href="logout.php">Logout</a></li>
             </ul>
@@ -210,16 +181,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <section class="course-management">
     <h2>Course Management</h2>
-    <!-- <form id="course-form">
-        <label for="course-name-input">Course Name:</label>
-        <input type="text" id="course-name-input" name="course-name-input" required>
-
-        <label for="course-desc-input">Course Description:</label>
-        <input type="text" id="course-desc-input" name="course-desc-input" required>
-
-        <button type="submit">Add Course</button>
-    </form> -->
-
     <form id="course-form" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> method="POST">
         <label for="course-name-input">Course Name:</label>
         <input type="text" id="course-name-input" name="course-name-input" required>

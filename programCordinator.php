@@ -27,7 +27,8 @@ session_start();
                 <li><a href="instructorList.php">Instructor</a></li>
                 <li><a href="QAList.php">QA officer</a></li>
                 <li><a href="adminList.php">Admin</a></li>
-                <li><a href="chat.php">Chat</a></li>
+                <li><a href="chats.php">Chat</a></li>
+                <li><a href="userInfo.php?username=<?php echo $_SESSION['username']; ?>">Profile</a></li>
                 <li><a href="logout.php">Logout</a></li>
             </ul>
         </div>
@@ -52,8 +53,8 @@ session_start();
             <h2>Communication Tools</h2>
             <!-- Add communication tools here, e.g., chat, messaging, email -->
             <ul>
-                <li><a href="chat.php">Chat with Instructors</a></li>
-                <li><a href="chat.php">Send Messages to Students</a></li>
+                <li><a href="chats.php">Chat with Instructors</a></li>
+                <li><a href="chats.php">Send Messages to Students</a></li>
                 <li><a href="mailto:
                 <?php
                     echo $_SESSION["email"];

@@ -51,7 +51,7 @@ foreach ($users as $key => $user) {
             <ul class="nav-menu">
                 <li><a href="#">About</a></li>
                 <li><a href="#">Contact</a></li>
-                <li><a href="chat.php">Chat</a></li>
+                <li><a href="chats.php">Chat</a></li>
                 <?php if (isset($_SESSION['username'])): ?>
                     <?php if ($_SESSION['role'] == "student"): ?>
                         <li><a href="student.php">Student
@@ -105,13 +105,10 @@ foreach ($users as $key => $user) {
         </div>
         <div class="chat-input">
             <input type="text" id="message-input" placeholder="Type your message...">
-            <!-- dropdown list of users --> 
-            <select name="users" id="users" class="users"  >
-                <?php foreach ($users as $user): ?>
-                    <option value="<?php echo $user['id']; ?>">
-                        <?php echo $user['username']; ?>
-                    </option>
-                <?php endforeach ?>
+            <select name="users" id="users" class="users">
+                <?php foreach ($users as $user) : ?>
+                    <option value="<?php echo $user['id']; ?>"><?php echo $user['username']; ?></option>
+                <?php endforeach; ?>
             </select>
 
             <button id="send-button">Send</button>
@@ -143,8 +140,17 @@ foreach ($users as $key => $user) {
             var senderName = "<?php echo $_SESSION["username"]; ?>";
             var receiverId = document.getElementById("users").value;
             var receiverName = document.getElementById("users").text;
+
+            // onchange event listener for the users dropdown
+            document.getElementById("users").addEventListener("change", function () {
+                receiverId = this.value;
+                receiverName = this.text;
+            });
+
             // Function to fetch and display messages
             function displayMessages() {
+                // console.log(senderId);
+                // console.log(receiverId);
                 // Make an AJAX request to get chat messages
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", "get_chat_messages.php", true);

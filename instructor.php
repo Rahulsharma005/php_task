@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "Student not found in the database.";
     }
-} 
+}
 
 
 // get all courses assigned to the current instructor
@@ -86,6 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -94,6 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../Css/index.css"> <!-- Link to your CSS file -->
     <link rel="stylesheet" href="../Css/Home.css"> <!-- Link to your CSS file -->
 </head>
+
 <body>
 
     <nav class="navbar">
@@ -109,20 +111,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <li><a href="Files.php">Files</a></li>
                 <li><a href="Chats.php">Chat</a></li>
                 <li><a href="Appointments.php">Appointments</a></li>
+                <li><a href="userInfo.php?username=<?php echo $_SESSION['username']; ?>">Profile</a></li>
                 <li><a href="logout.php">Logout</a></li>
             </ul>
         </div>
     </nav>
 
     <section class="student-info-section">
-        <h2>Instructor  Information</h2>
+        <h2>Instructor Information</h2>
         <div class="student-info">
-             <!-- <p><strong>Name:</strong> [Student Name]</p> -->
-             <p><strong>Name:</strong> <?php echo htmlspecialchars($_SESSION["username"]); ?></p>
+            <!-- <p><strong>Name:</strong> [Student Name]</p> -->
+            <p><strong>Name:</strong>
+                <?php echo htmlspecialchars($_SESSION["username"]); ?>
+            </p>
             <!-- <p><strong>Email:</strong> [Student Email]</p> -->
-            <p><strong>Email:</strong> <?php echo htmlspecialchars($_SESSION["email"]); ?></p>
+            <p><strong>Email:</strong>
+                <?php echo htmlspecialchars($_SESSION["email"]); ?>
+            </p>
             <!-- <p><strong>Student ID:</strong> [Student ID]</p> -->
-            <p><strong>Instructor ID:</strong> <?php echo htmlspecialchars($_SESSION["id"]); ?></p>
+            <p><strong>Instructor ID:</strong>
+                <?php echo htmlspecialchars($_SESSION["id"]); ?>
+            </p>
             <!-- Add more student information here -->
         </div>
     </section>
@@ -130,10 +139,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <section class="student-feedback">
         <div>
             <ul>
-                <button>Create Exam</button>
-                <button>Grade Students</button>
-                <button>Create Course</button>
-                <button>Create Forum</button>
+                <button><a href="CGCC.php?action=create_exam">Create Exam</a></button>
+                <button><a href="CGCC.php?action=grade_students">Grade Students</a></button>
+                <button><a href="CGCC.php?action=create_course">Create Course</a></button>
+                <button><a href="CGCC.php?action=create_forum">Create Forum</a></button>
+
             </ul>
         </div>
         <br>
@@ -179,19 +189,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </section>
     <!-- ... (previous HTML code) ... -->
 
-<section class="course-management">
-    <h2>Course Management</h2>
-    <form id="course-form" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> method="POST">
-        <label for="course-name-input">Course Name:</label>
-        <input type="text" id="course-name-input" name="course-name-input" required>
+    <section class="course-management">
+        <h2>Course Management</h2>
+        <form id="course-form" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> method="POST">
+            <label for="course-name-input">Course Name:</label>
+            <input type="text" id="course-name-input" name="course-name-input" required>
 
-        <label for="course-desc-input">Course Description:</label>
-        <input type="text" id="course-desc-input" name="course-desc-input" required>
+            <label for="course-desc-input">Course Description:</label>
+            <input type="text" id="course-desc-input" name="course-desc-input" required>
 
-        <button type="submit">Add Course</button>
-    </form>
+            <button type="submit">Add Course</button>
+        </form>
 
-    <!-- <table id="course-table">
+        <!-- <table id="course-table">
         <thead>
             <tr>
                 <th>Course Name</th>
@@ -213,80 +223,84 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </tr>
         </tbody>
     </table> -->
-    <?php
-    if (count($courses) > 0) {
-        echo "<table id='course-table'>";
-        echo "<thead>";
-        echo "<tr>";
-        echo "<th>Course Name</th>";
-        echo "<th>Course Description</th>";
-        echo "</tr>";
-        echo "</thead>";
-        echo "<tbody>";
-        foreach ($courses as $course) {
+        <?php
+        if (count($courses) > 0) {
+            echo "<table id='course-table'>";
+            echo "<thead>";
             echo "<tr>";
-            echo "<td>" . $course[0] . "</td>";
-            echo "<td>" . $course[1] . "</td>";
+            echo "<th>Course Name</th>";
+            echo "<th>Course Description</th>";
             echo "</tr>";
+            echo "</thead>";
+            echo "<tbody>";
+            foreach ($courses as $course) {
+                echo "<tr>";
+                echo "<td>" . $course[0] . "</td>";
+                echo "<td>" . $course[1] . "</td>";
+                echo "</tr>";
+            }
+            echo "</tbody>";
+            echo "</table>";
+        } else {
+            echo "<p>No courses found.</p>";
         }
-        echo "</tbody>";
-        echo "</table>";
-    } else {
-        echo "<p>No courses found.</p>";
-    }
-    ?>
-</section>
+        ?>
+    </section>
 
-<section class="student-progress">
-    <h2>Student Progress Tracking</h2>
-    <form id="progress-form" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> method="POST">
-        <label for="student-name-input">Student Name:</label>
-        <input type="text" id="student-name-input" name="student-name-input" required>
+    <section class="student-progress">
+        <h2>Student Progress Tracking</h2>
+        <form id="progress-form" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> method="POST">
+            <label for="student-name-input">Student Name:</label>
+            <input type="text" id="student-name-input" name="student-name-input" required>
 
-        <label for="progress-input">Progress:</label>
-        <input type="text" id="progress-input" name="progress-input" required>
+            <label for="progress-input">Progress:</label>
+            <input type="text" id="progress-input" name="progress-input" required>
 
-        <button type="submit">Add Progress</button>
-    </form>
+            <button type="submit">Add Progress</button>
+        </form>
 
-    <?php
-    if (count($student_feedbacks) > 0) {
-        echo "<table id='progress-table'>";
-        echo "<thead>";
-        echo "<tr>";
-        echo "<th>Student Name</th>";
-        echo "<th>Progress</th>";
-        echo "</tr>";
-        echo "</thead>";
-        echo "<tbody>";
-        foreach ($student_feedbacks as $student_feedback) {
+        <?php
+        if (count($student_feedbacks) > 0) {
+            echo "<table id='progress-table'>";
+            echo "<thead>";
             echo "<tr>";
-            echo "<td>" . $student_feedback[0] . "</td>";
-            echo "<td>" . $student_feedback[1] . "</td>";
+            echo "<th>Student Name</th>";
+            echo "<th>Progress</th>";
             echo "</tr>";
+            echo "</thead>";
+            echo "<tbody>";
+            foreach ($student_feedbacks as $student_feedback) {
+                echo "<tr>";
+                echo "<td>" . $student_feedback[0] . "</td>";
+                echo "<td>" . $student_feedback[1] . "</td>";
+                echo "</tr>";
+            }
+            echo "</tbody>";
+            echo "</table>";
+        } else {
+            echo "<p>No progress found.</p>";
         }
-        echo "</tbody>";
-        echo "</table>";
-    } else {
-        echo "<p>No progress found.</p>";
-    }
-    ?>
-</section>
+        ?>
+    </section>
 
-<footer>
-    <div class="container-footer">
-        <p>&copy; 2023 Skillify. All rights reserved.</p>
-        <div class="social-media-icons">
-            <a href="https://www.facebook.com/yourcompany" target="_blank"><img width="20" height="20" src="../icon/facebook.png" alt="Facebook"></a>
-            <a href="https://www.twitter.com/yourcompany" target="_blank"><img width="20" height="20" src="../icon/twitter.png" alt="Twitter"></a>
-            <a href="https://www.linkedin.com/company/yourcompany" target="_blank"><img width="20" height="20" src="../icon/instagram.png" alt="instagram"></a>
+    <footer>
+        <div class="container-footer">
+            <p>&copy; 2023 Skillify. All rights reserved.</p>
+            <div class="social-media-icons">
+                <a href="https://www.facebook.com/yourcompany" target="_blank"><img width="20" height="20"
+                        src="../icon/facebook.png" alt="Facebook"></a>
+                <a href="https://www.twitter.com/yourcompany" target="_blank"><img width="20" height="20"
+                        src="../icon/twitter.png" alt="Twitter"></a>
+                <a href="https://www.linkedin.com/company/yourcompany" target="_blank"><img width="20" height="20"
+                        src="../icon/instagram.png" alt="instagram"></a>
+            </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
-<!-- ... (rest of the code) ... -->
+    <!-- ... (rest of the code) ... -->
 
 
     <!-- <script src="../js/ins.js"></script> Link to your JavaScript file -->
 </body>
+
 </html>

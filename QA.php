@@ -27,12 +27,9 @@ session_start();
                 <li><a href="studentlist.php">Student List</a></li>
                 <li><a href="instructor.php">Instructor</a></li>
                 <li><a href="programCordinator.php">Co-ordinator</a></li>
-                <li><a href="chat.php">Chat</a></li>
-                <li>
-                    <form action="logout.php" method="POST">
-                        <button type="submit" name="logout-submit" class="logout-btn">Logout</button>
-                    </form>
-                </li>
+                <li><a href="chats.php">Chat</a></li>
+                <li><a href="userInfo.php?username=<?php echo $_SESSION['username']; ?>">Profile</a></li>
+                <li><a href="logout.php">Logout</a></li>
             </ul>
         </div>
     </nav>
@@ -51,7 +48,6 @@ session_start();
                 <tr>
                     <th>Course Name</th>
                     <th>Instructor</th>
-                    <th>Analytics</th>
                 </tr>
             </thead>
             <?php
@@ -60,7 +56,6 @@ session_start();
                     echo "<tr>";
                     echo "<td>" . $_SESSION["course"][$i] . "</td>";
                     echo "<td>" . $_SESSION["instructorName"][$i] . "</td>";
-                    echo "<td><a href='courseAnalytics.php'>View Analytics</a></td>";
                     echo "</tr>";
                 }
                 echo "</tbody>";
@@ -89,7 +84,7 @@ session_start();
                     echo "<td>" . $_SESSION["studentName"][$i] . "</td>";
                     echo "<td>" . $_SESSION["course"][$i] . "</td>";
                     echo "<td>" . $_SESSION["instructorName"][$i] . "</td>";
-                    echo "<td><a href='stuAnalytics.php'>View Analytics</a></td>";
+                    echo "<td><a href='analytics.php?studentName=" . $_SESSION["studentName"][$i] . "'>View Analytics</a></td>";
                     echo "</tr>";
                 }
                 echo "</tbody>";
@@ -107,7 +102,6 @@ session_start();
                 <tr>
                     <th>Instructor Name</th>
                     <th>Course</th>
-                    <th>Analytics</th>
                 </tr>
             </thead>
             <?php
@@ -116,7 +110,6 @@ session_start();
                     echo "<tr>";
                     echo "<td>" . $_SESSION["instructorName"][$i] . "</td>";
                     echo "<td>" . $_SESSION["course"][$i] . "</td>";
-                    echo "<td><a href='insAnalytic.php'>View Analytics</a></td>";
                     echo "</tr>";
                 }
                 echo "</tbody>";

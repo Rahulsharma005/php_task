@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $password = generatePassword();
 
                 // Create an email address
-                $email = $userName . "@" . $userRole . "@sklify.com";
+                $email = $userName . "" . $userRole . "@sklify.com";
 
                 // Insert user into the 'users' table
                 $sql_insert_user = "INSERT INTO users (username, role, email, password) VALUES (?, ?, ?, ?)";
@@ -177,6 +177,7 @@ session_start();
                 <li><a href="instructorList.php">Instructor</a></li>
                 <li><a href="QAList.php">QA officer</a></li>
                 <li><a href="programCordinatorList.php">Co-ordinator</a></li>
+                <li><a href="userInfo.php?username=<?php echo $_SESSION['username']; ?>">Profile</a></li>
                 <li><a href="logout.php">Logout</a></li>
             </ul>
         </div>
@@ -223,7 +224,8 @@ session_start();
             echo "<tbody>";
             for($i=0;$i<count($_SESSION["studentdata"]);$i++){
                 echo "<tr class='table-row'>";
-                echo "<td class='table-cell'><a href='userInfo.php'>" . $_SESSION["studentName"][$i]. "</a></td>";
+                // echo "<td class='table-cell'><a href='userInfo.php'>" . $_SESSION["studentName"][$i]. "</a></td>";
+                echo "<td class='table-cell'><a href='userInfo.php?username=" . $_SESSION["studentName"][$i] . "'>" . $_SESSION["studentName"][$i]. "</a></td>";
                 echo "<td class='table-cell'>" . $_SESSION["studentdata"][$i] . "</td>";
                 echo "</tr>";
             }
@@ -246,7 +248,8 @@ session_start();
             echo "<tbody>";
             for($i=0;$i<count($_SESSION["instructordata"]);$i++){
                 echo "<tr class='table-row'>";
-                echo "<td class='table-cell'><a href='userInfo.php'>" . $_SESSION["instructorName"][$i]. "</a></td>";
+                // echo "<td class='table-cell'><a href='userInfo.php'>" . $_SESSION["instructorName"][$i]. "</a></td>";
+                echo "<td class='table-cell'><a href='userInfo.php?username=" . $_SESSION["instructorName"][$i] . "'>" . $_SESSION["instructorName"][$i]. "</a></td>";
                 echo "<td class='table-cell'>" . $_SESSION["instructordata"][$i] . "</td>";
                 echo "</tr>";
             }
@@ -268,7 +271,8 @@ session_start();
             echo "<tbody>";
             for($i=0;$i<count($_SESSION["qadata"]);$i++){
                 echo "<tr class='table-row'>";                
-                echo "<td class='table-cell'><a href='userInfo.php'>" . $_SESSION["QAName"][$i]. "</a></td>";
+                // echo "<td class='table-cell'><a href='userInfo.php'>" . $_SESSION["QAName"][$i]. "</a></td>";
+                echo "<td class='table-cell'><a href='userInfo.php?username=" . $_SESSION["QAName"][$i] . "'>" . $_SESSION["QAName"][$i]. "</a></td>";
                 echo "<td class='table-cell'>" . $_SESSION["qadata"][$i] . "</td>";
                 echo "</tr>";            
             }
@@ -290,7 +294,8 @@ session_start();
             echo "<tbody>";
             for($i=0;$i<count($_SESSION["coordinatordata"]);$i++){
                 echo "<tr class='table-row'>";
-                echo "<td class='table-cell'><a href='userInfo.php'>" . $_SESSION["coordinatorName"][$i]. "</a></td>";
+                // echo "<td class='table-cell'><a href='userInfo.php'>" . $_SESSION["coordinatorName"][$i]. "</a></td>";
+                echo "<td class='table-cell'><a href='userInfo.php?username=" . $_SESSION["coordinatorName"][$i] . "'>" . $_SESSION["coordinatorName"][$i]. "</a></td>";
                 echo "<td class='table-cell'>" . $_SESSION["coordinatordata"][$i] . "</td>";
                 echo "</tr>";
             }

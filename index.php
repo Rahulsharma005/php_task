@@ -26,7 +26,7 @@ session_start();
             <ul class="nav-menu">
                 <li><a href="#">About</a></li>
                 <li><a href="#">Contact</a></li>
-                <li><a href="chat.php">Chat</a></li>
+                <li><a href="chats.php">Chat</a></li>
                 <?php if (isset($_SESSION['username'])) : ?>
                     <?php if ($_SESSION['role'] == "student") : ?>
                         <li><a href="student.php">Student <?php echo $_SESSION['username']; ?></a></li>

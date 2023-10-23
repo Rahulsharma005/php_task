@@ -27,17 +27,11 @@ session_start();
             <ul class="nav-menu">
                 <li><a href="stuAnalytics.php">Grades</a></li>
                 <li><a href="Files.php">Files</a></li>
-                <li><a href="Chat.php">Chat</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-                <li>
-                    <form action="logout.php" method="POST">
-                        <button type="submit" name="logout-submit" class="logout-btn">Logout</button>
-                    </form>
-                </li>
-
-                <!-- <li><a href="login.php">Login</a></li>
-                <li><a href="register.php">Signup</a></li> -->
+                <li><a href="chats.php">Chat</a></li>
+                <li><a href="About.php">About</a></li>
+                <li><a href="Contact">Contact</a></li>
+                <li><a href="userInfo.php?username=<?php echo $_SESSION['username']; ?>">Profile</a></li>
+                <li><a href="logout.php">Logout</a></li>
             </ul>
         </div>
     </nav>

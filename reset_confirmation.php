@@ -1,12 +1,5 @@
 <?php
 session_start();
-
-// Check if the user is already logged in, and if so, redirect to a welcome page or their profile
-if (isset($_SESSION['username'])) {
-    header("Location: index.php");
-    exit;
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +8,6 @@ if (isset($_SESSION['username'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Password Reset Confirmation</title>
-    <link rel="stylesheet" href="../Css/reset_confirmation.css"> <!-- Link to your CSS file -->
 </head>
 <body>
     <div class="reset-confirmation-container">
@@ -30,7 +22,7 @@ if (isset($_SESSION['username'])) {
             // Display a default message if no confirmation message is found
             echo '<p>An email with instructions to reset your password has been sent to your email address.</p>';
             echo '<p>Please check your email and follow the provided instructions to reset your password.</p>';
-            echo '<p>Didn\'t receive an email? <a href="forgot.php">Try again</a></p>';
+            echo '<p>Didn\'t receive an email? <a href="Forgot.php">Try again</a></p>';
         }
         ?>
     </div>
